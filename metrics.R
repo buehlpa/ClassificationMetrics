@@ -70,7 +70,7 @@ server <- function(input, output) {
     model <- glm(Cluster ~ X + Y, data = data, family = 'binomial')
     predictions <- predict(model, type = "response")
     
-    thresholds <- seq(0, 1, length.out = 100)
+    thresholds <- seq(0, 1, length.out = 200)
     precision_values <- numeric(length(thresholds))
     recall_values <- numeric(length(thresholds))
     
@@ -89,6 +89,9 @@ server <- function(input, output) {
     
     precision_values_auprc <- precision_values
     precision_values_auprc[is.na(precision_values_auprc)] <- 1
+    
+    print(recall_values_auprc)
+    print(precision_values_auprc)
     
     auprc <- trapz(recall_values, precision_values_auprc)
     
